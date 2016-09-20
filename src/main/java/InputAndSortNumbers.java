@@ -34,7 +34,8 @@ public class InputAndSortNumbers {
                 "4 — Shell Sort\n" +
                 "5 — Quick Sort\n" +
                 "6 — Bucket Sort\n" +
-                "7 — Merge Sort");
+                "7 — Merge Sort\n" +
+                "8 — Heap Sort");
 
         Scanner input = new Scanner(System.in);
         int choice;
@@ -56,6 +57,8 @@ public class InputAndSortNumbers {
             case 6: chosenSortMethod = new BucketSort();
                 break;
             case 7: chosenSortMethod = new MergeSort();
+                break;
+            case 8: chosenSortMethod = new HeapSort();
                 break;
             default:
                 System.out.println("Please, choose proper option!");
