@@ -28,7 +28,7 @@ class HeapSort implements SortNumbers {
         heap.remove(heap.size() - 1);
 
         int top = 1;
-        while (top * 2 <= heap.size() - 1 ) {
+        while (top * 2 <= heap.size() - 1) {
             int max = top * 2;
             if (max + 1 <= heap.size() - 1 && heap.get(max + 1) > heap.get(max)) {
                 max = max + 1;
