@@ -14,9 +14,10 @@ class BucketSort implements SortNumbers {
         return bucket;
     }
 
-    private static List<List<Integer>> putIntoBuckets(List<Integer> numberCollection, List<List<Integer>> bucket, int maxNumber) {
+    private static List<List<Integer>> putIntoBuckets(List<Integer> numberCollection, List<List<Integer>> bucket,
+                                                      int maxNumber, int minNumber) {
         int amountOfBuckets = bucket.size();
-        int amountOfElementsInBucket = (maxNumber / amountOfBuckets) + 1;
+        int amountOfElementsInBucket = (maxNumber - minNumber / amountOfBuckets) + 1;
         int boarderNumber = maxNumber - amountOfElementsInBucket;
         for (Integer element : numberCollection) {
             while (amountOfBuckets > 0) {
@@ -38,11 +39,11 @@ class BucketSort implements SortNumbers {
 
     private static int getAmountOfBuckets(int minNumber, int maxNumber) {
         int amountOfBuckets;
-        if (maxNumber - minNumber < 10) {
+        if (maxNumber - minNumber <= 10) {
             amountOfBuckets = ((maxNumber - minNumber) / 5) + 1;
-        } else if (maxNumber - minNumber > 10 && maxNumber - minNumber < 100) {
+        } else if (maxNumber - minNumber > 10 && maxNumber - minNumber <= 100) {
             amountOfBuckets = ((maxNumber - minNumber) / 10) + 1;
-        } else if (maxNumber - minNumber > 100 && maxNumber - minNumber < 1000) {
+        } else if (maxNumber - minNumber > 100 && maxNumber - minNumber <= 1000) {
             amountOfBuckets = ((maxNumber - minNumber) / 100) + 1;
         } else {
             amountOfBuckets = ((maxNumber - minNumber) / 1000) + 1;
@@ -67,7 +68,8 @@ class BucketSort implements SortNumbers {
             }
         }
 
-        List<List<Integer>> bucket = putIntoBuckets(numberCollection, createBuckets(minNumber, maxNumber), maxNumber);
+        List<List<Integer>> bucket = putIntoBuckets(numberCollection, createBuckets(minNumber, maxNumber),
+                maxNumber, minNumber);
         numberCollection.clear();
         for (List part : bucket) {
             InsertionSort sort = new InsertionSort();
