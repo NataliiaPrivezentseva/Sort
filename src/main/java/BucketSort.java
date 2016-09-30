@@ -14,10 +14,10 @@ class BucketSort implements SortNumbers {
         return bucket;
     }
 
-    private static List<List<Integer>> putIntoBuckets(List<Integer> numberCollection, List<List<Integer>> bucket,
-                                                      int maxNumber, int minNumber) {
+    private static void putIntoBuckets(List<Integer> numberCollection, List<List<Integer>> bucket,
+                                       int maxNumber, int minNumber) {
         int amountOfBuckets = bucket.size();
-        int amountOfElementsInBucket = (maxNumber - minNumber / amountOfBuckets) + 1;
+        int amountOfElementsInBucket = ((maxNumber - minNumber) / amountOfBuckets) + 1;
         int boarderNumber = maxNumber - amountOfElementsInBucket;
         for (Integer element : numberCollection) {
             while (amountOfBuckets > 0) {
@@ -34,7 +34,7 @@ class BucketSort implements SortNumbers {
 
         }
 
-        return bucket;
+        //return bucket;
     }
 
     private static int getAmountOfBuckets(int minNumber, int maxNumber) {
@@ -52,9 +52,9 @@ class BucketSort implements SortNumbers {
     }
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         if (numberCollection.size() == 1) {
-            return numberCollection;
+            return;
         }
 
         int minNumber = numberCollection.get(0);
@@ -68,15 +68,19 @@ class BucketSort implements SortNumbers {
             }
         }
 
-        List<List<Integer>> bucket = putIntoBuckets(numberCollection, createBuckets(minNumber, maxNumber),
+        List<List<Integer>> bucket = createBuckets(minNumber, maxNumber);
+        putIntoBuckets(numberCollection, bucket,
                 maxNumber, minNumber);
-        numberCollection.clear();
+
+        List<Integer> sortedNumberCollection = new ArrayList<>();
         for (List part : bucket) {
             InsertionSort sort = new InsertionSort();
             sort.sortNumberCollection(part);
-            numberCollection.addAll(part);
+            sortedNumberCollection.addAll(part);
         }
-        return numberCollection;
-    }
 
+        for (int i = 0; i < sortedNumberCollection.size(); i++) {
+            numberCollection.set(i, sortedNumberCollection.get(i));
+        }
+    }
 }

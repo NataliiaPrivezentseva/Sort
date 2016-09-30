@@ -4,9 +4,9 @@ import java.util.List;
 class MergeSort implements SortNumbers {
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         if (numberCollection.size() <= 1) {
-            return numberCollection;
+            return;
         }
 
         // divide NumberCollection
@@ -50,8 +50,6 @@ class MergeSort implements SortNumbers {
                 indexNumberCollection++;
             }
         }
-
-        return numberCollection;
     }
 
 }

@@ -33,7 +33,10 @@ abstract public class SortTest {
     @Test
     public void sortNumberCollection() {
         for (int i = 0; i < collection.size(); i++) {
-            Assert.assertEquals(getCollectionForSort().sortNumberCollection(collection.get(i).getLeft()), collection.get(i).getRight());
+            getCollectionForSort().sortNumberCollection(collection.get(i).getLeft());
+            List<Integer> expected = collection.get(i).getLeft();
+            List<Integer> actual = collection.get(i).getRight();
+            Assert.assertEquals(expected, actual);
         }
     }
 }

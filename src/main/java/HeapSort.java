@@ -5,7 +5,7 @@ class HeapSort implements SortNumbers {
 
     private ArrayList<Integer> heap = new ArrayList<>();
 
-    private static ArrayList<Integer> addToHeap(ArrayList<Integer> heap, Integer element) {
+    private static void addToHeap(ArrayList<Integer> heap, Integer element) {
         if (heap.isEmpty()) {
             heap.add(null);
             heap.add(element);
@@ -19,7 +19,6 @@ class HeapSort implements SortNumbers {
                 index = index / 2;
             }
         }
-        return heap;
     }
 
     private static int removeFromHeap(ArrayList<Integer> heap) {
@@ -50,19 +49,16 @@ class HeapSort implements SortNumbers {
     }
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         // made heap from numberCollection
-        for (int i = 0; i < numberCollection.size(); i++) {
-            addToHeap(heap, numberCollection.get(i));
+        for (Integer element : numberCollection) {
+            addToHeap(heap, element);
         }
 
         for (int j = numberCollection.size() - 1; j >= 0; j--) {
             numberCollection.set(j, removeFromHeap(heap));
         }
-
-        return numberCollection;
     }
-
 
 }
 
