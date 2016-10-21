@@ -10,9 +10,10 @@ class InsertionSort implements SortNumbers {
             int j;
             int start;
 
-            for (j = i - 1; j >= 0 && movedElement < numberCollection.get(j); j--);
+            for (j = i - 1; j >= 0 && movedElement < numberCollection.get(j); j--) ;
             start = j + 1;
             Collections.rotate(numberCollection.subList(start, i + 1), -(i - start));
         }
     }
+
 }
