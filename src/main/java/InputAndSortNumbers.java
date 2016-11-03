@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,24 +10,35 @@ public class InputAndSortNumbers {
 
         Scanner scanner = new Scanner(System.in);
         List<Integer> numberCollection = new ArrayList<>();
+        // TODO: 19.10.2016 сделать валидацию ввода, продумать, как красиво закончить ввод
         while (scanner.hasNextInt()) {
             numberCollection.add(scanner.nextInt());
         }
 
         printNumberCollection(numberCollection);
 
-        SortNumbers chosenSortMethod = chooseSortMethod();
-        chosenSortMethod.sortNumberCollection(numberCollection);
+        // не надо исключения! надо валидацию ввода при вводе
+        boolean isException;
+        do {
+            try {
+                isException = false;
+                chooseSortMethod().sortNumberCollection(numberCollection);
+            } catch (InputMismatchException e) {
+                isException = true;
+                System.out.println("You've chosen improper option! Please, try again!");
+            }
+        } while (isException);
+
         printNumberCollection(numberCollection);
     }
 
-    private static void printNumberCollection(List<Integer> numberCollection){
+    private static void printNumberCollection(List<Integer> numberCollection) {
         for (Integer i : numberCollection)
             System.out.print(i + "\t");
         System.out.println();
     }
 
-    private static SortNumbers chooseSortMethod(){
+    private static SortNumbers chooseSortMethod() {
         System.out.println("Please, choose sortNumberCollection method:\n" +
                 "1 — Bubble Sort\n" +
                 "2 — Selection Sort\n" +
@@ -41,30 +53,37 @@ public class InputAndSortNumbers {
         int choice;
         choice = input.nextInt();
 
-        SortNumbers chosenSortMethod = null;
-
-        switch (choice){
-            case 1: chosenSortMethod = new BubbleSort();
+        SortNumbers chosenSortMethod;
+        switch (choice) {
+            case 1:
+                chosenSortMethod = new BubbleSort();
                 break;
-            case 2: chosenSortMethod = new SelectionSort();
+            case 2:
+                chosenSortMethod = new SelectionSort();
                 break;
-            case 3: chosenSortMethod = new InsertionSort();
+            case 3:
+                chosenSortMethod = new InsertionSort();
                 break;
-            case 4: chosenSortMethod = new ShellSort();
+            case 4:
+                chosenSortMethod = new ShellSort();
                 break;
-            case 5: chosenSortMethod = new QuickSort();
+            case 5:
+                chosenSortMethod = new QuickSort();
                 break;
-            case 6: chosenSortMethod = new BucketSort();
+            case 6:
+                chosenSortMethod = new BucketSort();
                 break;
-            case 7: chosenSortMethod = new MergeSort();
+            case 7:
+                chosenSortMethod = new MergeSort();
                 break;
-            case 8: chosenSortMethod = new HeapSort();
+            case 8:
+                chosenSortMethod = new HeapSort();
                 break;
             default:
-                System.out.println("Please, choose proper option!");
-                System.exit(-1);
+                throw new InputMismatchException();
         }
         return chosenSortMethod;
     }
+
 }
 

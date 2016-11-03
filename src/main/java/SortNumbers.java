@@ -1,5 +1,5 @@
 import java.util.List;
 
 interface SortNumbers {
-    List<Integer> sortNumberCollection(List<Integer> numberCollection);
+    void sortNumberCollection(List<Integer> numberCollection);
 }

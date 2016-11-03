@@ -4,7 +4,7 @@ import java.util.List;
 class BubbleSort implements SortNumbers {
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         for (int i = numberCollection.size() - 1; i > 0; i--) {
           boolean swapped = false;
 
@@ -19,6 +19,5 @@ class BubbleSort implements SortNumbers {
                 break;
             }
         }
-        return numberCollection;
     }
 }

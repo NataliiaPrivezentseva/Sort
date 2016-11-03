@@ -4,7 +4,7 @@ import java.util.List;
 class SelectionSort implements SortNumbers {
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         for (int i = 0; i < numberCollection.size() - 1; i++) {
             int min = numberCollection.get(i);
             int indexMin = i;
@@ -20,6 +20,5 @@ class SelectionSort implements SortNumbers {
                 Collections.swap(numberCollection, i, indexMin);
             }
         }
-        return numberCollection;
     }
 }

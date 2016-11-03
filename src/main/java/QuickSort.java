@@ -4,7 +4,7 @@ import java.util.List;
 class QuickSort implements SortNumbers {
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         int collectionSize = numberCollection.size();
         int startIndex = 0;
         int finishIndex = collectionSize - 1;
@@ -31,6 +31,5 @@ class QuickSort implements SortNumbers {
         if (startIndex < collectionSize) {
             sortNumberCollection(numberCollection.subList(startIndex, collectionSize));
         }
-        return numberCollection;
     }
 }

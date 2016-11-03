@@ -3,7 +3,7 @@ import java.util.List;
 class ShellSort implements SortNumbers {
 
     @Override
-    public List<Integer> sortNumberCollection(List<Integer> numberCollection) {
+    public void sortNumberCollection(List<Integer> numberCollection) {
         int step = numberCollection.size() / 2;
 
         while (step >= 1) {
@@ -20,6 +20,5 @@ class ShellSort implements SortNumbers {
 
             step = step / 2;
         }
-        return numberCollection;
     }
 }
