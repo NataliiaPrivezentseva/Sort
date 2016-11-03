@@ -10,7 +10,7 @@ public class InputAndSortNumbers {
 
         Scanner scanner = new Scanner(System.in);
         List<Integer> numberCollection = new ArrayList<>();
-        // TODO: 19.10.2016 конец ввода по времени и по символу?
+        // TODO: 19.10.2016 сделать валидацию ввода, продумать, как красиво закончить ввод
         while (scanner.hasNextInt()) {
             numberCollection.add(scanner.nextInt());
         }
