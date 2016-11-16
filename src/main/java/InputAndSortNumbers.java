@@ -6,30 +6,22 @@ import java.util.Scanner;
 public class InputAndSortNumbers {
 
     public static void main(String[] args) {
+        List<Integer> numberCollection = getNumbersFromUser();
+
+        printNumberCollection(numberCollection);
+        chooseSortMethod().sortNumberCollection(numberCollection);
+        printNumberCollection(numberCollection);
+    }
+
+    private static List<Integer> getNumbersFromUser() {
         System.out.println("Please, input your numbers to sort");
 
         Scanner scanner = new Scanner(System.in);
         List<Integer> numberCollection = new ArrayList<>();
-        // TODO: 19.10.2016 сделать валидацию ввода, продумать, как красиво закончить ввод
         while (scanner.hasNextInt()) {
             numberCollection.add(scanner.nextInt());
         }
-
-        printNumberCollection(numberCollection);
-
-        // не надо исключения! надо валидацию ввода при вводе
-        boolean isException;
-        do {
-            try {
-                isException = false;
-                chooseSortMethod().sortNumberCollection(numberCollection);
-            } catch (InputMismatchException e) {
-                isException = true;
-                System.out.println("You've chosen improper option! Please, try again!");
-            }
-        } while (isException);
-
-        printNumberCollection(numberCollection);
+        return numberCollection;
     }
 
     private static void printNumberCollection(List<Integer> numberCollection) {
@@ -39,19 +31,33 @@ public class InputAndSortNumbers {
     }
 
     private static SortNumbers chooseSortMethod() {
-        System.out.println("Please, choose sortNumberCollection method:\n" +
-                "1 — Bubble Sort\n" +
-                "2 — Selection Sort\n" +
-                "3 — Insertion Sort\n" +
-                "4 — Shell Sort\n" +
-                "5 — Quick Sort\n" +
-                "6 — Bucket Sort\n" +
-                "7 — Merge Sort\n" +
-                "8 — Heap Sort");
-
+        int choice = 0;
+        String usersChoice;
         Scanner input = new Scanner(System.in);
-        int choice;
-        choice = input.nextInt();
+        String regex = "[1-8]";
+        do {
+            System.out.println("Please, choose sortNumberCollection method:\n" +
+                    "1 — Bubble Sort\n" +
+                    "2 — Selection Sort\n" +
+                    "3 — Insertion Sort\n" +
+                    "4 — Shell Sort\n" +
+                    "5 — Quick Sort\n" +
+                    "6 — Bucket Sort\n" +
+                    "7 — Merge Sort\n" +
+                    "8 — Heap Sort");
+
+            usersChoice = input.next();
+            try {
+                choice = Integer.parseInt(usersChoice);
+            } catch (NumberFormatException e) {
+                System.out.println("\'" + usersChoice + "\' is not proper choice! Try again!");
+            }
+
+            if (!usersChoice.matches(regex)) {
+                System.out.println("\'" + usersChoice + "\' is not proper choice! Try again!");
+            }
+
+        } while (!usersChoice.matches(regex));
 
         SortNumbers chosenSortMethod;
         switch (choice) {
