@@ -31,11 +31,12 @@ abstract public class SortTest {
     public abstract SortNumbers getCollectionForSort();
 
     @Test
-    public void sortNumberCollection() {
-        for (int i = 0; i < collection.size(); i++) {
-            getCollectionForSort().sortNumberCollection(collection.get(i).getLeft());
-            List<Integer> expected = collection.get(i).getLeft();
-            List<Integer> actual = collection.get(i).getRight();
+    public void sortNumberCollectionTest() {
+
+        for (Pair<List<Integer>, List<Integer>> i : collection) {
+            getCollectionForSort().sortNumberCollection(i.getLeft());
+            List<Integer> expected = i.getLeft();
+            List<Integer> actual = i.getRight();
             Assert.assertEquals(expected, actual);
         }
     }
