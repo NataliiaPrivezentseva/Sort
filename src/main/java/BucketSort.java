@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class BucketSort implements SortNumbers {
-    // TODO: 03.11.2016 write nested class
-    private static List<List<Integer>> createBuckets(int minNumber, int maxNumber) {
-        int amountOfBuckets = getAmountOfBuckets(minNumber, maxNumber);
+
+    private static List<List<Integer>> createBuckets(NumberCollectionParameters parameters) {
+        int amountOfBuckets = getAmountOfBuckets(parameters);
 
         List<List<Integer>> bucket = new ArrayList<>();
         for (int j = 0; j < amountOfBuckets; j++) {
@@ -14,41 +14,41 @@ class BucketSort implements SortNumbers {
         return bucket;
     }
 
-    private static void putIntoBuckets(List<Integer> numberCollection, List<List<Integer>> bucket,
-                                       int maxNumber, int minNumber) {
+    private static void putIntoBuckets(List<Integer> numberCollection,
+                                       List<List<Integer>> bucket,
+                                       NumberCollectionParameters parameters) {
         int amountOfBuckets = bucket.size();
-        int amountOfElementsInBucket = ((maxNumber - minNumber) / amountOfBuckets) + 1;
-        int boarderNumber = maxNumber - amountOfElementsInBucket;
+        int amountOfElementsInBucket = ((parameters.getMaxNumber() - parameters.getMinNumber()) / amountOfBuckets) + 1;
+        int boarderNumber = parameters.getMaxNumber() - amountOfElementsInBucket;
         for (Integer element : numberCollection) {
             while (amountOfBuckets > 0) {
                 if (element > boarderNumber) {
-                   (bucket.get(amountOfBuckets - 1)).add(element);
-                   break;
+                    (bucket.get(amountOfBuckets - 1)).add(element);
+                    break;
                 } else {
-                   amountOfBuckets--;
-                   boarderNumber = boarderNumber - amountOfElementsInBucket;
+                    amountOfBuckets--;
+                    boarderNumber = boarderNumber - amountOfElementsInBucket;
                 }
             }
             amountOfBuckets = bucket.size();
-            boarderNumber = maxNumber - amountOfElementsInBucket;
+            boarderNumber = parameters.getMaxNumber() - amountOfElementsInBucket;
 
         }
     }
 
-    private static int getAmountOfBuckets(int minNumber, int maxNumber) {
+    private static int getAmountOfBuckets(NumberCollectionParameters parameters) {
         int amountOfBuckets;
-        if (maxNumber - minNumber <= 10) {
-            amountOfBuckets = ((maxNumber - minNumber) / 5) + 1;
-        } else if (maxNumber - minNumber > 10 && maxNumber - minNumber <= 100) {
-            amountOfBuckets = ((maxNumber - minNumber) / 10) + 1;
-        } else if (maxNumber - minNumber > 100 && maxNumber - minNumber <= 1000) {
-            amountOfBuckets = ((maxNumber - minNumber) / 100) + 1;
+        if (parameters.getMaxNumber() - parameters.getMinNumber() <= 10) {
+            amountOfBuckets = ((parameters.getMaxNumber() - parameters.getMinNumber()) / 5) + 1;
+        } else if (parameters.getMaxNumber() - parameters.getMinNumber() > 10 && parameters.getMaxNumber() - parameters.getMinNumber() <= 100) {
+            amountOfBuckets = ((parameters.getMaxNumber() - parameters.getMinNumber()) / 10) + 1;
+        } else if (parameters.getMaxNumber() - parameters.getMinNumber() > 100 && parameters.getMaxNumber() - parameters.getMinNumber() <= 1000) {
+            amountOfBuckets = ((parameters.getMaxNumber() - parameters.getMinNumber()) / 100) + 1;
         } else {
-            amountOfBuckets = ((maxNumber - minNumber) / 1000) + 1;
+            amountOfBuckets = ((parameters.getMaxNumber() - parameters.getMinNumber()) / 1000) + 1;
         }
         return amountOfBuckets;
     }
-
 
     @Override
     public void sortNumberCollection(List<Integer> numberCollection) {
@@ -56,20 +56,11 @@ class BucketSort implements SortNumbers {
             return;
         }
 
-        int minNumber = numberCollection.get(0);
-        int maxNumber = numberCollection.get(0);
-        for (int i = 1; i < numberCollection.size(); i++) {
-            if (minNumber > numberCollection.get(i)) {
-                minNumber = numberCollection.get(i);
-            } else if (maxNumber < numberCollection.get(i)) {
-                maxNumber = numberCollection.get(i);
-            }
-        }
+        BucketSort bucketSort = new BucketSort();
+        BucketSort.NumberCollectionParameters parameters = bucketSort.new NumberCollectionParameters(numberCollection);
 
-
-        List<List<Integer>> bucket = createBuckets(minNumber, maxNumber);
-        putIntoBuckets(numberCollection, bucket,
-                maxNumber, minNumber);
+        List<List<Integer>> bucket = createBuckets(parameters);
+        putIntoBuckets(numberCollection, bucket, parameters);
 
         List<Integer> sortedNumberCollection = new ArrayList<>();
         for (List<Integer> part : bucket) {
@@ -80,6 +71,31 @@ class BucketSort implements SortNumbers {
 
         for (int i = 0; i < sortedNumberCollection.size(); i++) {
             numberCollection.set(i, sortedNumberCollection.get(i));
+        }
+    }
+
+    private class NumberCollectionParameters {
+        private int minNumber;
+        private int maxNumber;
+
+        NumberCollectionParameters (List<Integer> numberCollection){
+            minNumber = numberCollection.get(0);
+            maxNumber = numberCollection.get(0);
+            for (int i = 1; i < numberCollection.size(); i++) {
+                if (minNumber > numberCollection.get(i)) {
+                    minNumber = numberCollection.get(i);
+                } else if (maxNumber < numberCollection.get(i)) {
+                    maxNumber = numberCollection.get(i);
+                }
+            }
+        }
+
+        int getMinNumber() {
+            return minNumber;
+        }
+
+        int getMaxNumber() {
+            return maxNumber;
         }
     }
 }
